@@ -1,0 +1,23 @@
+# GitHub Pages configuration
+# This file tells GitHub Pages to serve the site from the docs/ directory
+
+# Theme (using no theme, custom CSS)
+theme: null
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+
+# Exclude files from the site
+exclude:
+  - README.md
+  - LICENSE
+
+# Include all files (including those starting with _)
+include:
+  - _*
+
+# Relative links enabled
+relative_links:
+  enabled: true
+  collections: false

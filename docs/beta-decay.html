@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Decay Rates Explorer - RSN 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>β-Decay Rates Explorer</h1>
+            <p class="subtitle">Interactive exploration of β-decay half-lives and properties</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="index.html">Home</a>
+            <a href="beta-decay.html" class="active">Beta Decay Rates</a>
+            <a href="strength-functions.html">Strength Functions</a>
+            <a href="https://github.com/kylegodbey/beta_decay_RSN_2025" target="_blank">GitHub Repository</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h2>Dataset Selection</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="interaction">Interaction:</label>
+                    <select id="interaction">
+                        <option value="DDPCX">DD-PCX</option>
+                        <option value="DDPC1">DD-PC1</option>
+                    </select>
+                </div>
+                <button class="button" onclick="loadData()">Load Data</button>
+            </div>
+
+            <div id="stats" class="stats" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalNuclei">-</div>
+                    <div class="stat-label">Total Nuclei</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="minZ">-</div>
+                    <div class="stat-label">Min Z</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="maxZ">-</div>
+                    <div class="stat-label">Max Z</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="minN">-</div>
+                    <div class="stat-label">Min N</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="maxN">-</div>
+                    <div class="stat-label">Max N</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dataSection" style="display: none;">
+            <h2>Beta Decay Data</h2>
+            
+            <div class="info-box">
+                <strong>Column Descriptions:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li><strong>N:</strong> Neutron number</li>
+                    <li><strong>Z:</strong> Proton number</li>
+                    <li><strong>E(β):</strong> Binding energy (MeV) at minimum-energy configuration</li>
+                    <li><strong>β₂:</strong> Mass quadrupole deformation parameter</li>
+                    <li><strong>Q:</strong> β⁻ Q-value (MeV)</li>
+                    <li><strong>log₁₀(T½):</strong> Base-10 logarithm of half-life (seconds)</li>
+                    <li><strong>FF%:</strong> First-forbidden contribution to decay rate (%)</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="searchZ">Filter by Z:</label>
+                    <input type="number" id="searchZ" placeholder="Proton number">
+                </div>
+                <div class="control-group">
+                    <label for="searchN">Filter by N:</label>
+                    <input type="number" id="searchN" placeholder="Neutron number">
+                </div>
+                <div class="control-group">
+                    <label for="searchElement">Filter by Element:</label>
+                    <input type="text" id="searchElement" placeholder="e.g., Cu, Fe">
+                </div>
+                <div class="control-group">
+                    <label for="maxRows">Show rows:</label>
+                    <select id="maxRows">
+                        <option value="50">50</option>
+                        <option value="100" selected>100</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="10000">All</option>
+                    </select>
+                </div>
+                <button class="button" onclick="applyFilters()">Apply Filters</button>
+                <button class="button button-secondary" onclick="clearFilters()">Clear</button>
+            </div>
+
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" onclick="sortTable(0)">N</th>
+                            <th class="sortable" onclick="sortTable(1)">Z</th>
+                            <th class="sortable" onclick="sortTable(2)">Element</th>
+                            <th class="sortable" onclick="sortTable(3)">A</th>
+                            <th class="sortable" onclick="sortTable(4)">E(β) [MeV]</th>
+                            <th class="sortable" onclick="sortTable(5)">β₂</th>
+                            <th class="sortable" onclick="sortTable(6)">Q [MeV]</th>
+                            <th class="sortable" onclick="sortTable(7)">log₁₀(T½) [s]</th>
+                            <th class="sortable" onclick="sortTable(8)">FF%</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataBody">
+                    </tbody>
+                </table>
+            </div>
+            <div id="pagination" style="margin-top: 1rem; text-align: center;"></div>
+        </section>
+
+        <section id="chartSection" style="display: none;">
+            <h2>Visualization</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="chartType">Chart Type:</label>
+                    <select id="chartType" onchange="updateChart()">
+                        <option value="halflife">Half-Life vs Mass Number</option>
+                        <option value="qvalue">Q-value vs Mass Number</option>
+                        <option value="deformation">Deformation vs Mass Number</option>
+                        <option value="ff">FF Contribution vs Mass Number</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="dataChart"></canvas>
+            </div>
+        </section>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            Loading data...
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ravlić, Saito, and Nazarewicz. Data repository for research purposes.</p>
+        </div>
+    </footer>
+
+    <script src="beta-decay.js"></script>
+</body>
+</html>

@@ -8,6 +8,16 @@ This repository aggregates:
 1. **β-decay datasets** computed with axially deformed **RHB + pnQRPA** using the **DD-PC1** and **DD-PCX** interactions.
 2. **r-process simulation outputs** used to assess astrophysical impact.
 
+## 🌐 Interactive Data Explorer
+
+**Explore the data online:** [https://kylegodbey.github.io/beta_decay_RSN_2025/](https://kylegodbey.github.io/beta_decay_RSN_2025/)
+
+The repository includes an interactive web application that allows you to:
+- **Browse β-decay rates** for ~4,900 nuclei with interactive filtering, sorting, and visualization
+- **Visualize strength functions** for 105 selected nuclei with Gamow-Teller and first-forbidden modes
+- **Download data** directly from the web interface
+
+The web application is built with vanilla JavaScript and runs entirely in the browser, making it fast and accessible without any backend requirements.
 
 ---
 

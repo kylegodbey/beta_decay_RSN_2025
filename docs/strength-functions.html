@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strength Functions Explorer - RSN 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Strength Functions Explorer</h1>
+            <p class="subtitle">Gamow-Teller and First-Forbidden charge-exchange strength functions</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="index.html">Home</a>
+            <a href="beta-decay.html">Beta Decay Rates</a>
+            <a href="strength-functions.html" class="active">Strength Functions</a>
+            <a href="https://github.com/kylegodbey/beta_decay_RSN_2025" target="_blank">GitHub Repository</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h2>About Strength Functions</h2>
+            <div class="info-box">
+                <p>
+                    This page displays <strong>Gamow-Teller (GT)</strong> and <strong>first-forbidden (FF)</strong> 
+                    charge-exchange strength functions from linear response QRPA calculations on axially-deformed RHB ground states.
+                </p>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li><strong>Framework:</strong> RHB + linear response QRPA with DD-PCX interaction</li>
+                    <li><strong>Modes:</strong> GT (Gamow-Teller) and FF (First-Forbidden 1⁻)</li>
+                    <li><strong>K-decomposition:</strong> K = 0, K = 1, and Total = K₀ + 2K₁</li>
+                    <li><strong>Available nuclei:</strong> 105 selected nuclei</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Select Nucleus</h2>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label for="searchNucleus">Search:</label>
+                    <input type="text" id="searchNucleus" placeholder="e.g., Cu78, Fe, Z=29" oninput="filterNuclei()">
+                </div>
+            </div>
+
+            <div id="nucleusGrid" class="nucleus-grid">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section id="plotSection" style="display: none;">
+            <h2>Strength Function Plot</h2>
+            
+            <div id="nucleusInfo" class="info-box"></div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="modeSelect">Mode:</label>
+                    <select id="modeSelect" onchange="updatePlot()">
+                        <option value="GAMTGAMT">Gamow-Teller (GT)</option>
+                        <option value="NSDRNSDR">First-Forbidden (FF)</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="componentSelect">Component:</label>
+                    <select id="componentSelect" onchange="updatePlot()">
+                        <option value="Total">Total (K₀ + 2K₁)</option>
+                        <option value="K0">K = 0</option>
+                        <option value="K1">K = 1</option>
+                        <option value="All">All Components</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="chart-container" style="height: 500px;">
+                <canvas id="strengthChart"></canvas>
+            </div>
+
+            <div id="downloadLinks" style="margin-top: 1rem;">
+                <p><strong>Download Data:</strong></p>
+                <div id="downloadButtons" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+            </div>
+        </section>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            Loading data...
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ravlić, Saito, and Nazarewicz. Data repository for research purposes.</p>
+        </div>
+    </footer>
+
+    <script src="strength-functions.js"></script>
+</body>
+</html>
