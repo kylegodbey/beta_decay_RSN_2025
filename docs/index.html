@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Decay Data Explorer - RSN 2025</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>β-Decay Data Explorer</h1>
+            <p class="subtitle">Large-scale calculations of β-decay rates and implications for r-process nucleosynthesis</p>
+            <p class="authors">Ravlić, Saito, and Nazarewicz (in preparation, 2025)</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <a href="index.html" class="active">Home</a>
+            <a href="beta-decay.html">Beta Decay Rates</a>
+            <a href="strength-functions.html">Strength Functions</a>
+            <a href="https://github.com/kylegodbey/beta_decay_RSN_2025" target="_blank">GitHub Repository</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="intro">
+            <h2>Welcome</h2>
+            <p>
+                This interactive web application provides access to β-decay datasets computed with axially deformed 
+                <strong>RHB + pnQRPA</strong> using the <strong>DD-PC1</strong> and <strong>DD-PCX</strong> interactions.
+            </p>
+        </section>
+
+        <section class="features">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🔬 Beta Decay Rates</h3>
+                    <p>
+                        Explore β-decay half-lives, Q-values, and first-forbidden contributions for ~4,900 nuclei
+                        calculated with DD-PC1 and DD-PCX interactions.
+                    </p>
+                    <a href="beta-decay.html" class="button">Explore Beta Decay Data</a>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📊 Strength Functions</h3>
+                    <p>
+                        Visualize Gamow-Teller and first-forbidden charge-exchange strength functions for 105 selected nuclei,
+                        decomposed by K-quantum number.
+                    </p>
+                    <a href="strength-functions.html" class="button">Explore Strength Functions</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="overview">
+            <h2>Dataset Overview</h2>
+            
+            <div class="data-info">
+                <h3>Beta-Decay Tables</h3>
+                <ul>
+                    <li><strong>Interactions:</strong> DD-PC1 and DD-PCX</li>
+                    <li><strong>Number of nuclei:</strong> ~4,900 per interaction</li>
+                    <li><strong>Data includes:</strong> Neutron/proton numbers, binding energies, deformation parameters, 
+                        Q-values, half-lives, and first-forbidden contributions</li>
+                </ul>
+            </div>
+
+            <div class="data-info">
+                <h3>Strength Functions</h3>
+                <ul>
+                    <li><strong>Nuclei:</strong> 105 selected nuclei (DD-PCX interaction only)</li>
+                    <li><strong>Modes:</strong> Gamow-Teller (GT) and First-Forbidden (FF) spin-dipole</li>
+                    <li><strong>Decomposition:</strong> K = 0 and K = 1 components, plus total strength</li>
+                    <li><strong>Format:</strong> Energy (MeV) vs. Strength function S(E)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="contact">
+            <h2>Contact</h2>
+            <p><strong>Ante Ravlić</strong><br>
+            Michigan State University / FRIB / University of Zagreb<br>
+            Email: <a href="mailto:aravlic@phy.hr">aravlic@phy.hr</a></p>
+
+            <p><strong>Yukiya Saito</strong><br>
+            Michigan State University / FRIB / University of Tennessee / University of Notre Dame<br>
+            Email: <a href="mailto:saitoy@frib.msu.edu">saitoy@frib.msu.edu</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ravlić, Saito, and Nazarewicz. Data repository for research purposes.</p>
+        </div>
+    </footer>
+</body>
+</html>
